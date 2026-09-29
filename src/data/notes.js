@@ -12,12 +12,13 @@ export const notes = {
   notCovered: {
     heading: 'Not covered by demo',
     items: [
+      'Right-click actions',
       'New layer, Delete selected and Merge selected into... buttons',
-      'Renaming layers with slow-motion (in progress)'
+      'Renaming layers with slow-motion (in progress)',
       'Layer filters panel and Variations panel on the right',
-      'Search box and the Export to clipboard',
+      'Search box, Export to clipboard',
       'Settings icon next to Protocol for Layer Naming',
-      'Line-type and Line-width columns, and the Description column',
+      'Line-type, Color, Description',
     ],
   },
 }
