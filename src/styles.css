@@ -1,0 +1,179 @@
+:root {
+  --bg: #f3f3f3;
+  --panel-border: #d0d0d0;
+  --text: #1f1f1f;
+  --muted: #7a7a7a;
+  --accent: #2f7fd0;
+  --select: #dcdcdc;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: #c9d3dd; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+  font-size: 12px; color: var(--text);
+}
+button { font: inherit; cursor: pointer; }
+
+.dialog {
+  width: 1034px; height: 657px; background: var(--bg);
+  border: 1px solid #b5b5b5; border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.25);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.titlebar {
+  height: 34px; padding: 0 12px; display: flex; align-items: center;
+  justify-content: space-between; font-size: 13px; color: #666; background: #fff;
+}
+.close {
+  border: 0; background: #e8e8e8; color: #666; width: 18px; height: 18px;
+  line-height: 14px; border-radius: 4px; font-size: 14px; padding: 0;
+}
+.dialog-body { flex: 1; display: flex; gap: 16px; padding: 4px 8px 8px 8px; min-height: 0; }
+.left { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.right { width: 250px; display: flex; flex-direction: column; }
+
+/* toolbar */
+.toolbar { display: flex; justify-content: space-between; align-items: center; height: 40px; margin-bottom: 4px; }
+.toolbar-left { display: flex; align-items: center; gap: 6px; }
+.current-layer { margin-left: 22px; }
+.icon-btn {
+  background: transparent; border: 1px solid transparent; border-radius: 3px;
+  padding: 2px; display: inline-flex; align-items: center; justify-content: center;
+}
+.icon-btn:hover:not(:disabled) { background: #e2e8f0; border-color: #c4ccd6; }
+.icon-btn:disabled { cursor: default; }
+.search {
+  display: flex; align-items: center; gap: 6px; padding-right: 6px;
+}
+.search input {
+  width: 128px; height: 20px; border: 1px solid var(--panel-border);
+  border-radius: 3px; padding: 0 6px; font: inherit; background: #fff;
+}
+
+/* table */
+.table-wrap {
+  flex: 1; overflow: auto; background: #fff; border: 1px solid var(--panel-border);
+  min-height: 0;
+}
+.layer-table { border-collapse: collapse; table-layout: fixed; width: 100%; }
+.layer-table thead th {
+  position: sticky; top: 0; z-index: 1; background: #fff; text-align: left;
+  font-weight: 400; padding: 5px 6px; height: 26px; white-space: nowrap;
+  border-bottom: 1px solid var(--panel-border); border-right: 1px solid #e6e6e6;
+}
+.layer-table td {
+  height: 22px; padding: 0 6px; white-space: nowrap; overflow: hidden;
+  text-overflow: ellipsis; line-height: 22px;
+}
+.layer-table tbody tr:hover { background: #eef4fb; }
+.layer-table tr.linked td { color: #6f6f6f; }
+.layer-table td.c-source, .layer-table td.c-name { display: table-cell; }
+.c-name { padding-left: 14px; }
+.cell-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; vertical-align: middle; margin-right: 6px;
+  flex-shrink: 0;
+}
+/* The Name cell mixes a fixed-size icon with either a truncating label or
+   an inline edit box; flex lets the label/input claim exactly the leftover
+   width instead of the input's 100% overriding the whole row (which is
+   what caused the whole cell to collapse into a single "…"). */
+.c-name {
+  display: flex; align-items: center; overflow: hidden;
+  white-space: nowrap; text-overflow: clip;
+}
+.c-name .ellipsis, .c-name .cell-edit {
+  flex: 1 1 0; min-width: 0;
+}
+.cell-icon svg { display: block; }
+.ellipsis { vertical-align: middle; }
+.c-icon { text-align: center; }
+.c-icon svg { display: inline-block; vertical-align: middle; }
+.swatch {
+  display: block; width: 18px; height: 14px; margin-top: 1px; border-radius: 3px;
+}
+
+/* right column panels */
+.panel { padding: 0 0 0 4px; }
+.panel h3 { font-size: 12px; font-weight: 400; margin: 8px 0 6px; }
+.mini-toolbar { display: flex; gap: 6px; margin-bottom: 6px; }
+.tree-box {
+  background: #fff; border: 1px solid var(--panel-border); height: 152px; padding: 4px;
+  overflow: auto;
+}
+.tree-box.tall { height: 176px; }
+.tree, .tree ul { list-style: none; margin: 0; padding: 0; }
+.tree ul { margin-left: 8px; padding-left: 14px; border-left: 1px dotted #9a9a9a; }
+.tree-item {
+  display: flex; align-items: center; gap: 4px; padding: 1px 4px; line-height: 16px;
+  width: fit-content;
+}
+.tree-item.selected { background: var(--select); }
+.toggle {
+  width: 9px; height: 9px; border: 1px solid #8a8a8a; font-size: 9px; line-height: 7px;
+  text-align: center; background: #fff; color: #333; flex: none;
+}
+.check { display: flex; align-items: center; gap: 6px; margin-top: 8px; white-space: nowrap; }
+.check input { margin: 0; width: 13px; height: 13px; accent-color: #1e6fc0; }
+.panel > .check:first-of-type { margin-top: 10px; }
+.variations { border-top: 1px solid var(--panel-border); margin-top: 14px; padding-top: 0; }
+.hint { color: #333; font-size: 11.5px; line-height: 1.35; margin: 8px 0 0; }
+
+/* footer */
+.footer-options { display: flex; align-items: center; gap: 18px; height: 34px; padding-top: 4px; }
+
+.footer-options .check { margin-top: 0; }
+.footer-buttons { margin-top: auto; display: flex; gap: 10px; }
+.btn {
+  flex: 1; height: 24px; background: #fff; border: 1px solid #c9c9c9;
+  border-radius: 4px; color: var(--text);
+}
+.btn:hover { background: #e9f1fb; border-color: #9dbbe0; }
+.btn:active { background: #d8e6f7; }
+
+/* row selection */
+.layer-table { user-select: none; }
+.layer-table tbody tr { cursor: default; }
+.layer-table tbody tr.selected,
+.layer-table tbody tr.selected:hover { background: #cde4f8; }
+.toolbar-left { gap: 4px; }
+
+/* clickable state icons, disabled toolbar buttons, footer gear */
+.cell-btn {
+  background: transparent; border: 0; padding: 0; display: inline-flex;
+  align-items: center; justify-content: center; cursor: pointer; vertical-align: middle;
+}
+.cell-btn:hover { filter: brightness(0.9) drop-shadow(0 0 1px rgba(0,0,0,.4)); }
+.icon-btn:disabled { opacity: 0.35; filter: grayscale(0.6); }
+.check-group { display: inline-flex; align-items: center; gap: 4px; }
+
+/* page layout + notes */
+.page { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 24px 0; }
+.notes {
+  width: 1034px; background: #fff; border-radius: 8px; padding: 22px 32px 26px;
+  font-size: 13px; color: #333;
+}
+.notes h2 { font-size: 15px; font-weight: 600; margin: 0 0 14px; }
+.notes h4 { font-size: 13px; font-weight: 600; margin: 0 0 8px; }
+.notes ul { margin: 0; padding-left: 20px; }
+.notes li { margin: 0 0 6px; line-height: 1.45; }
+
+/* toolbar groups */
+.toolbar-left { gap: 16px; }
+.toolbar-group { display: flex; align-items: center; gap: 2px; }
+
+/* framed icon button (footer settings) */
+.icon-btn.framed {
+  border: 1px solid #c9c9c9; border-radius: 3px; background: #fff;
+  width: 24px; height: 22px;
+}
+.gear-group { padding-left: 26px; }
+.icon-btn.framed:hover { background: #e9f1fb; border-color: #9dbbe0; }
+.icon-btn.framed:active { background: #d8e6f7; }
+
+/* inline rename / line-width edit */
+.cell-edit {
+  width: 100%; height: 18px; font: inherit; font-size: 12px;
+  border: 1px solid #000; border-radius: 0; padding: 0 3px;
+  background: #fff; box-sizing: border-box;
+}
