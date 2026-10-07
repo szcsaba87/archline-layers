@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { PlusIcon, CrossIcon, RefreshIcon } from './Icons.jsx'
 
 export default function Variations({ data }) {
+  const [selected, setSelected] = useState(data.selected)
   return (
     <section className="panel variations">
       <h3>Variations</h3>
@@ -9,21 +11,16 @@ export default function Variations({ data }) {
         <button className="icon-btn"><CrossIcon /></button>
         <button className="icon-btn"><RefreshIcon /></button>
       </div>
-      <div className="tree-box tall">
-        <ul className="tree">
-          <li>
-            <div className="tree-item"><span className="toggle">−</span><span>{data.root}</span></div>
-            <ul>
-              {data.items.map((item) => (
-                <li key={item}>
-                  <div className={'tree-item' + (item === data.selected ? ' selected' : '')}>
-                    <span>{item}</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </li>
-        </ul>
+      <div className="variations-box">
+        {data.items.map((item) => (
+          <div
+            key={item}
+            className={'variation-row' + (item === selected ? ' selected' : '')}
+            onClick={() => setSelected(item)}
+          >
+            {item}
+          </div>
+        ))}
       </div>
       <p className="hint">
         A layer variation saves all the layers with the current states. It helps

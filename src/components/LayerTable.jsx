@@ -4,7 +4,7 @@ import { BulbIcon, LockIcon, PrinterIcon, LayerIcon, LinkIcon, CheckIcon } from 
 const columns = [
   ['name', 'Name'], ['on', 'On'], ['lock', 'Lock'],
   ['print', 'Print'], ['color', 'Color'], ['lineType', 'Line-type'],
-  ['lineWidth', 'Line-w...'], ['source', 'Source'], ['description', 'Description'],
+  ['lineWidth', 'Line-width'], ['source', 'Source'], ['description', 'Description'],
 ]
 
 // A slow second click on an already-selected, single row's editable text
@@ -141,8 +141,11 @@ function Row({ layer, selected, onlySelected, onClick, onActivate, onToggle, onR
   )
 }
 
+const SORTABLE_COLUMNS = new Set(['name', 'on', 'lock', 'print'])
+
 export default function LayerTable({
   layers, visibleIndices, selected, onRowClick, onActivate, onToggle, onRename, onLineWidthChange,
+  onSortColumn,
 }) {
   const indices = visibleIndices ?? layers.map((_, i) => i)
   return (
@@ -152,11 +155,19 @@ export default function LayerTable({
           <col style={{ width: 230 }} />
           <col style={{ width: 44 }} /><col style={{ width: 44 }} />
           <col style={{ width: 44 }} /><col style={{ width: 40 }} />
-          <col style={{ width: 76 }} /><col style={{ width: 66 }} />
+          <col style={{ width: 76 }} /><col style={{ width: 86 }} />
           <col style={{ width: 112 }} /><col style={{ width: 90 }} />
         </colgroup>
         <thead>
-          <tr>{columns.map(([key, label]) => <th key={key}>{label}</th>)}</tr>
+          <tr>
+            {columns.map(([key, label]) => (
+              SORTABLE_COLUMNS.has(key) ? (
+                <th key={key} className="sortable" onClick={() => onSortColumn(key)}>{label}</th>
+              ) : (
+                <th key={key}>{label}</th>
+              )
+            ))}
+          </tr>
         </thead>
         <tbody>
           {indices.map((i) => (

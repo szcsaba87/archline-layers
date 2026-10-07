@@ -61,32 +61,41 @@ button { font: inherit; cursor: pointer; }
   font-weight: 400; padding: 5px 6px; height: 26px; white-space: nowrap;
   border-bottom: 1px solid var(--panel-border); border-right: 1px solid #e6e6e6;
 }
+/* On, Lock, Print, Color, Line-type, Line-width headers (2nd through 7th column) */
+.layer-table thead th:nth-child(n+2):nth-child(-n+7) { text-align: center; }
+.layer-table thead th.sortable { cursor: pointer; user-select: none; }
+.layer-table thead th.sortable:hover { background: #eef4fb; }
+/* Line-width (7th column): center the whole column, not just the header */
+.layer-table tbody td:nth-child(7) { text-align: center; }
+.layer-table tbody td:nth-child(7) .cell-edit { text-align: center; }
+/* Color (5th column): center the swatch too */
+.layer-table tbody td:nth-child(5) { text-align: center; }
 .layer-table td {
   height: 22px; padding: 0 6px; white-space: nowrap; overflow: hidden;
   text-overflow: ellipsis; line-height: 22px;
 }
 .layer-table tbody tr:hover { background: #eef4fb; }
 .layer-table tr.linked td { color: #6f6f6f; }
-.layer-table td.c-source, .layer-table td.c-name { display: table-cell; }
-.c-name { padding-left: 14px; }
 .cell-icon {
   display: inline-flex; align-items: center; justify-content: center;
   width: 22px; height: 22px; vertical-align: middle; margin-right: 6px;
   flex-shrink: 0;
 }
-/* The Name cell mixes a fixed-size icon with either a truncating label or
-   an inline edit box; flex lets the label/input claim exactly the leftover
-   width instead of the input's 100% overriding the whole row (which is
-   what caused the whole cell to collapse into a single "…"). */
+/* The Name cell is a fixed-size icon plus a label/input that should claim
+   exactly the leftover width. Flex handles the sizing; the truncation
+   itself lives on .ellipsis (below), not on this container, so a long
+   name still gets a real "…" instead of the whole row clipping. */
 .c-name {
-  display: flex; align-items: center; overflow: hidden;
-  white-space: nowrap; text-overflow: clip;
+  display: flex; align-items: center; padding-left: 14px;
 }
 .c-name .ellipsis, .c-name .cell-edit {
   flex: 1 1 0; min-width: 0;
 }
 .cell-icon svg { display: block; }
-.ellipsis { vertical-align: middle; }
+.ellipsis {
+  display: block; overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap; vertical-align: middle; min-width: 0;
+}
 .c-icon { text-align: center; }
 .c-icon svg { display: inline-block; vertical-align: middle; }
 .swatch {
@@ -101,7 +110,17 @@ button { font: inherit; cursor: pointer; }
   background: #fff; border: 1px solid var(--panel-border); height: 152px; padding: 4px;
   overflow: auto;
 }
-.tree-box.tall { height: 176px; }
+/* Variations: flat selectable list, same hover/selected colors as the layer table */
+.variations-box {
+  background: #fff; border: 1px solid var(--panel-border); padding: 4px 0;
+  overflow: auto;
+}
+.variation-row {
+  padding: 5px 10px; font-size: 12px; cursor: pointer;
+}
+.variation-row:hover { background: #eef4fb; }
+.variation-row.selected,
+.variation-row.selected:hover { background: #cde4f8; }
 .tree, .tree ul { list-style: none; margin: 0; padding: 0; }
 .tree ul { margin-left: 8px; padding-left: 14px; border-left: 1px dotted #9a9a9a; }
 .tree-item {
@@ -177,3 +196,5 @@ button { font: inherit; cursor: pointer; }
   border: 1px solid #000; border-radius: 0; padding: 0 3px;
   background: #fff; box-sizing: border-box;
 }
+
+/* Layer filters hint */

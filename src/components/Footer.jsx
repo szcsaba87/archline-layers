@@ -3,7 +3,6 @@ import { Settings } from 'lucide-react'
 export default function Footer() {
   return (
     <div className="footer-options">
-      <span>Number of filtered layers:</span>
       <label className="check"><input type="checkbox" defaultChecked /> Do not delete used layers</label>
       <label className="check"><input type="checkbox" /> Layer control mode</label>
       <span className="check-group gear-group">

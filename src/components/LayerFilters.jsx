@@ -35,6 +35,7 @@ export default function LayerFilters({
       <label className="check">
         <input type="checkbox" checked={showUsedOnly} onChange={onToggleShowUsedOnly} /> Show used layers only
       </label>
+      <p className="hint">Select layers and drag them into any layer group.</p>
     </section>
   )
 }
